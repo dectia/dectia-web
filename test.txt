@@ -1,0 +1,1 @@
+﻿                                { title: "Diseñá la evaluación", content: "Seleccioná tipo de instalación, agregá campos y obtené feedback IA sobre cobertura normativa." },
