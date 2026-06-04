@@ -186,6 +186,55 @@
         .calendly-inline-widget iframe::-webkit-scrollbar {
             display: none !important;
         }
+
+        .skip-nav {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: calc(100vw - 2rem);
+        }
+        .skip-nav:focus-within {
+            top: 1rem;
+        }
+
+        .skip-link {
+            padding: 0.75rem 1.25rem;
+            background: #00E68A;
+            color: #0B1D3A;
+            font-weight: 700;
+            border-radius: 9999px;
+            text-decoration: none;
+            width: fit-content;
+        }
+        .skip-link:focus {
+            outline: 2px solid #F5F5F0;
+            outline-offset: 2px;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 6rem;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid #00E68A;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -214,37 +263,67 @@
         gsap.registerPlugin(ScrollTrigger);
 
         const IconCheck = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>
         );
         const IconUpload = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
         );
         const IconFileText = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
         );
         const IconUser = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         );
         const IconLaptop = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line></svg>
         );
 
         const App = () => {
+            useEffect(() => {
+                const focusHashTarget = () => {
+                    const hash = window.location.hash;
+                    if (!hash) return;
+                    const target = document.querySelector(hash);
+                    if (target && typeof target.focus === 'function') {
+                        target.focus({ preventScroll: true });
+                    }
+                };
+
+                focusHashTarget();
+                window.addEventListener('hashchange', focusHashTarget);
+                return () => window.removeEventListener('hashchange', focusHashTarget);
+            }, []);
+
             return (
                 <div className="bg-obsidian w-full min-h-screen relative font-outfit text-chalk">
+                    <SkipNav />
                     <Navbar />
-                    <Hero />
-                    <Features />
-                    <Process />
-                    <Coverage />
+                    <main id="main-content" tabIndex={-1} className="section-anchor outline-none">
+                        <Hero />
+                        <Features />
+                        <Process />
+                        <Coverage />
+                    </main>
                     <Footer />
                 </div>
             );
         };
 
+        const SkipNav = () => (
+            <nav aria-label="Acceso rápido por secciones" className="skip-nav">
+                <a href="#main-content" className="skip-link">Saltar al contenido principal</a>
+                <a href="#features" className="skip-link">Saltar a Plataforma</a>
+                <a href="#paso" className="skip-link">Saltar a Metodología</a>
+                <a href="#cobertura" className="skip-link">Saltar a Casos de Uso</a>
+                <a href="#agenda-demo" className="skip-link">Saltar a Agendar demo</a>
+            </nav>
+        );
+
         const Navbar = () => {
             const navRef = useRef(null);
             const containerRef = useRef(null);
+            const [menuOpen, setMenuOpen] = useState(false);
+            const mobileMenuId = "mobile-nav-menu";
 
             useLayoutEffect(() => {
                 let ctx = gsap.context(() => {
@@ -260,22 +339,74 @@
                 return () => ctx.revert();
             }, []);
 
+            useEffect(() => {
+                const handleEscape = (event) => {
+                    if (event.key === 'Escape') setMenuOpen(false);
+                };
+                document.addEventListener('keydown', handleEscape);
+                return () => document.removeEventListener('keydown', handleEscape);
+            }, []);
+
+            const closeMenu = () => setMenuOpen(false);
+
             return (
-                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-500 group" ref={containerRef}>
-                    <div ref={navRef} className="flex items-center justify-between px-8 py-4 rounded-full border border-transparent transition-all duration-500 bg-transparent text-white group-[.nav-scrolled]:bg-bone/80 group-[.nav-scrolled]:backdrop-blur-md group-[.nav-scrolled]:border-sgreen/30 group-[.nav-scrolled]:text-ink shadow-lg">
-                        <div className="font-sora font-bold tracking-tight text-xl">Dectia.</div>
+                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-500 group" ref={containerRef} aria-label="Navegación principal">
+                    <div ref={navRef} className="flex items-center justify-between px-8 py-4 rounded-full border border-transparent transition-all duration-500 bg-transparent text-white group-[.nav-scrolled]:bg-white group-[.nav-scrolled]:border-sgreen/30 group-[.nav-scrolled]:text-ink shadow-lg">
+                        <a href="/" aria-label="Dectia — Inicio" className="relative flex-shrink-0 h-6 md:h-7">
+                            <img
+                                src="./logo-light.svg"
+                                alt=""
+                                width="167"
+                                height="38"
+                                className="h-full w-auto block group-[.nav-scrolled]:hidden transition-opacity duration-500"
+                            />
+                            <img
+                                src="./logo-dark.svg"
+                                alt=""
+                                width="167"
+                                height="38"
+                                className="h-full w-auto hidden group-[.nav-scrolled]:block transition-opacity duration-500"
+                            />
+                        </a>
                         <div className="hidden md:flex gap-8 text-sm font-medium">
-                            <a href="#features" className="hover:text-sgreen transition-colors">Plataforma</a>
-                            <a href="#paso" className="hover:text-sgreen transition-colors">Metodología</a>
-                            <a href="#cobertura" className="hover:text-sgreen transition-colors">Casos de Uso</a>
+                            <a href="#features" className="hover:text-sgreen transition-colors rounded-sm">Plataforma</a>
+                            <a href="#paso" className="hover:text-sgreen transition-colors rounded-sm">Metodología</a>
+                            <a href="#cobertura" className="hover:text-sgreen transition-colors rounded-sm">Casos de Uso</a>
                         </div>
-                        <div className="flex items-center gap-6">
-                            <a href="#agenda-demo" className="btn-magnetic bg-sgreen text-navy font-bold px-6 py-2 rounded-full text-sm flex items-center justify-center">
+                        <div className="flex items-center gap-3 md:gap-6">
+                            <button
+                                type="button"
+                                className="md:hidden p-2 rounded-full hover:bg-white/10 group-[.nav-scrolled]:hover:bg-ink/5 transition-colors"
+                                aria-expanded={menuOpen}
+                                aria-controls={mobileMenuId}
+                                aria-label={menuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+                                onClick={() => setMenuOpen((open) => !open)}
+                            >
+                                <svg aria-hidden="true" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                    {menuOpen
+                                        ? <><line x1="6" y1="6" x2="18" y2="18" /><line x1="6" y1="18" x2="18" y2="6" /></>
+                                        : <><line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" /></>}
+                                </svg>
+                            </button>
+                            <a href="#agenda-demo" className="btn-magnetic bg-sgreen text-navy font-bold px-4 md:px-6 py-2 rounded-full text-sm flex items-center justify-center">
                                 Agendar Demo
                             </a>
-                            <a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" className="btn-magnetic bg-white text-navy font-bold px-6 py-2 rounded-full text-sm hover:opacity-90 transition-opacity">Acceder</a>
+                            <a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" aria-label="Acceder a la plataforma (se abre en una nueva pestaña)" className="hidden sm:flex btn-magnetic bg-white text-navy font-bold px-6 py-2 rounded-full text-sm hover:opacity-90 transition-opacity">Acceder</a>
                         </div>
                     </div>
+                    {menuOpen && (
+                        <div
+                            id={mobileMenuId}
+                            className="md:hidden mt-2 rounded-3xl border border-sgreen/30 bg-white text-ink shadow-lg p-4"
+                        >
+                            <ul className="flex flex-col gap-2">
+                                <li><a href="#features" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Plataforma</a></li>
+                                <li><a href="#paso" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Metodología</a></li>
+                                <li><a href="#cobertura" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Casos de Uso</a></li>
+                                <li className="sm:hidden"><a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Acceder</a></li>
+                            </ul>
+                        </div>
+                    )}
                 </nav>
             );
         };
@@ -298,37 +429,39 @@
             }, []);
 
             return (
-                <section ref={heroRef} className="relative w-full h-[100dvh] flex items-end pb-24 px-8 md:px-24">
-                    <div className="absolute inset-0 z-0">
+                <section ref={heroRef} aria-labelledby="hero-heading" className="relative isolate w-full min-h-[100dvh] h-[100dvh] overflow-hidden">
+                    <div className="absolute inset-0" aria-hidden="true">
                         <img 
                             src="./hero-bg.png" 
-                            alt="Panel de inteligencia de seguridad física de Dectia" 
+                            alt="" 
                             width="1920"
                             height="1080"
                             fetchpriority="high"
                             decoding="async"
-                            className="w-full h-full object-cover grayscale-[30%] blur-[1px] scale-105"
+                            className="absolute inset-0 h-full w-full object-cover object-center grayscale-[30%] blur-[1px] scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-navy/30 mix-blend-multiply"></div>
                         <div className="absolute inset-0 bg-gradient-to-br from-obsidian via-transparent to-transparent"></div>
                     </div>
                     
-                    <div className="relative z-10 max-w-4xl left-0 text-left">
-                        <p className="hero-text text-sgreen font-mono text-sm tracking-widest mb-6 uppercase">
-                            [ INTELIGENCIA DE SEGURIDAD FÍSICA ]
-                        </p>
-                        <h1 className="hero-text font-sora font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-10">
-                            De semanas
-                            <span className="block font-cormorant italic font-normal tracking-normal mt-2">a horas.</span>
-                        </h1>
-                        <p className="hero-text font-outfit text-xl md:text-2xl text-chalk/80 max-w-2xl font-light mb-12">
-                            Convierte auditorías y relevamientos de seguridad en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.
-                        </p>
-                        <div className="hero-text flex gap-4">
-                            <button className="btn-magnetic bg-bone text-ink font-bold px-8 py-4 rounded-full flex items-center gap-2">
-                                Iniciar Evaluación
-                                <div className="w-2 h-2 rounded-full bg-sgreen animate-pulse"></div>
-                            </button>
+                    <div className="relative z-10 flex h-full w-full flex-col justify-end pb-24 px-8 md:px-24">
+                        <div className="max-w-4xl text-left">
+                            <p className="hero-text text-sgreen font-mono text-sm tracking-widest mb-6 uppercase">
+                                [ INTELIGENCIA DE SEGURIDAD FÍSICA ]
+                            </p>
+                            <h1 id="hero-heading" className="hero-text font-sora font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-10">
+                                De semanas
+                                <span className="block font-cormorant italic font-normal tracking-normal mt-2">a horas.</span>
+                            </h1>
+                            <p className="hero-text font-outfit text-xl md:text-2xl text-chalk/80 max-w-2xl font-light mb-12">
+                                Convierte auditorías y relevamientos de seguridad en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.
+                            </p>
+                            <div className="hero-text flex gap-4">
+                                <a href="#agenda-demo" className="btn-magnetic bg-bone text-ink font-bold px-8 py-4 rounded-full flex items-center gap-2">
+                                    Iniciar Evaluación
+                                    <span aria-hidden="true" className="w-2 h-2 rounded-full bg-sgreen animate-pulse"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -337,9 +470,9 @@
 
         const Features = () => {
             return (
-                <section id="features" className="py-32 px-8 md:px-24 bg-obsidian">
+                <section id="features" tabIndex={-1} aria-labelledby="features-heading" className="section-anchor py-32 px-8 md:px-24 bg-obsidian outline-none">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="font-sora text-5xl font-bold mb-4">Precisión y <span className="font-cormorant italic text-sgreen font-normal">expertise.</span></h2>
+                        <h2 id="features-heading" className="font-sora text-5xl font-bold mb-4">Precisión y <span className="font-cormorant italic text-sgreen font-normal">expertise.</span></h2>
                         <p className="font-outfit text-xl text-chalk/60 mb-20 max-w-2xl">Instrumentos funcionales diseñados para auditar el riesgo en tiempo récord con seguridad end-to-end.</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -671,7 +804,7 @@
             }, []);
 
             return (
-                <section id="paso" ref={processRef} className="relative py-32 px-8 md:px-24 overflow-hidden bg-bone text-ink">
+                <section id="paso" tabIndex={-1} ref={processRef} aria-labelledby="paso-heading" className="section-anchor relative py-32 px-8 md:px-24 overflow-hidden bg-bone text-ink outline-none">
                     <div className="absolute inset-0 z-0 overflow-hidden">
                         <img 
                             src="https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD.jpg" 
@@ -684,7 +817,7 @@
                         />
                     </div>
                     <div className="relative z-10 max-w-7xl mx-auto">
-                        <h2 className="font-sora text-5xl font-bold mb-16 text-center">El siguiente nivel <span className="text-sgreen font-cormorant italic font-normal">en seguridad.</span></h2>
+                        <h2 id="paso-heading" className="font-sora text-5xl font-bold mb-16 text-center">El siguiente nivel <span className="text-sgreen font-cormorant italic font-normal">en seguridad.</span></h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                                         {[
@@ -692,13 +825,13 @@
                                     title: "Diseña la evaluación", 
                                     content: (
                                         <>
-                                            Selecciona entre <strong>Auditorías</strong> y <strong>Relevamientos</strong>, especifica tu tipo de instalaciones y configura los campos que necesites mientras la IA experta te asiste con la normativa internacional actualizada
+                                            Selecciona entre <strong>Auditorías</strong> y <strong>Relevamientos</strong>, especifica tu tipo de instalaciones y configura los campos que necesites mientras la IA experta te asiste con la normativa internacional actualizada.
                                         </>
                                     ) 
                                 },
                                 { 
                                     title: "Lanza el análisis", 
-                                    content: "Define número de objetivos, organiza tu equipo asignando operados y publica. Tu equipo, cliente o potencial asociado completa el formulario desde cualquier lugar o dispositivo." 
+                                    content: "Define número de objetivos, organiza tu equipo asignando operadores y publica. Tu equipo, cliente o potencial asociado completa el formulario desde cualquier lugar o dispositivo." 
                                 },
                                 { 
                                     title: "Evaluación automática", 
@@ -787,10 +920,10 @@
             ];
 
             return (
-                <section id="cobertura" ref={containerRef} className="bg-obsidian h-screen flex flex-col overflow-hidden pt-20 pb-8 ">
+                <section id="cobertura" tabIndex={-1} ref={containerRef} aria-labelledby="cobertura-heading" className="section-anchor bg-obsidian h-screen flex flex-col overflow-hidden pt-20 pb-8 outline-none">
                     {/* Título arriba */}
                     <div className="flex-shrink-0 mb-6 max-w-7xl w-full mx-auto px-16">
-                        <h2 className="font-sora text-5xl md:text-6xl font-bold text-bone leading-tight">
+                        <h2 id="cobertura-heading" className="font-sora text-5xl md:text-6xl font-bold text-bone leading-tight">
                             Cobertura <span className="font-cormorant italic text-sgreen font-normal">integral.</span>
                         </h2>
                         {/* Progress bar */}
@@ -834,6 +967,8 @@
 
         const Footer = () => {
             const [isFormOpen, setIsFormOpen] = useState(false);
+            const formPanelId = "calendly-panel";
+            const demoHeadingId = "demo-heading";
 
             useEffect(() => {
                 const script = document.createElement('script');
@@ -842,31 +977,50 @@
                 document.body.appendChild(script);
             }, []);
 
+            useEffect(() => {
+                const handleEscape = (event) => {
+                    if (event.key === 'Escape' && isFormOpen) setIsFormOpen(false);
+                };
+                document.addEventListener('keydown', handleEscape);
+                return () => document.removeEventListener('keydown', handleEscape);
+            }, [isFormOpen]);
+
             return (
-                <footer id="agenda-demo" className="bg-obsidian pt-16 px-8 md:px-24 border-t border-navy/30">
-                    <div 
-                        className="max-w-7xl mx-auto bg-navy/20 rounded-t-[4rem] p-16 border border-b-0 border-chalk/5 mb-0 mt-8 text-center group cursor-pointer hover:bg-navy/40 transition-colors"
-                        onClick={() => setIsFormOpen(!isFormOpen)}
+                <footer id="agenda-demo" tabIndex={-1} className="section-anchor bg-obsidian pt-16 px-8 md:px-24 border-t border-navy/30 outline-none">
+                    <section
+                        className="max-w-7xl mx-auto bg-navy/20 rounded-t-[4rem] p-16 border border-b-0 border-chalk/5 mb-0 mt-8 text-center"
+                        aria-labelledby={demoHeadingId}
                     >
-                        <h2 className="font-sora font-bold text-5xl md:text-7xl mb-12 group-hover:text-sgreen transition-colors leading-tight">Agenda una <span className="font-cormorant italic font-normal">demo.</span></h2>
-                        <button className="btn-magnetic bg-bone text-ink font-bold px-12 py-5 rounded-full text-lg shadow-xl inline-flex items-center gap-3">
+                        <h2 id={demoHeadingId} className="font-sora font-bold text-5xl md:text-7xl mb-12 leading-tight">Agenda una <span className="font-cormorant italic font-normal">demo.</span></h2>
+                        <button
+                            type="button"
+                            className="btn-magnetic bg-bone text-ink font-bold px-12 py-5 rounded-full text-lg shadow-xl inline-flex items-center gap-3"
+                            aria-expanded={isFormOpen}
+                            aria-controls={formPanelId}
+                            onClick={() => setIsFormOpen((open) => !open)}
+                        >
                             {isFormOpen ? 'Cerrar Formulario' : 'Solicitar Acceso'}
-                            <div className={"w-2 h-2 rounded-full bg-sgreen " + (isFormOpen ? "" : "animate-pulse")}></div>
+                            <span aria-hidden="true" className={"w-2 h-2 rounded-full bg-sgreen " + (isFormOpen ? "" : "animate-pulse")}></span>
                         </button>
                         
                         <div 
-                            className="overflow-hidden transition-all duration-700 ease-in-out" 
+                            id={formPanelId}
+                            role="region"
+                            aria-labelledby={demoHeadingId}
+                            aria-hidden={!isFormOpen}
+                            tabIndex={isFormOpen ? undefined : -1}
+                            className={"overflow-hidden transition-all duration-700 ease-in-out" + (isFormOpen ? "" : " pointer-events-none")}
                             style={{ 
                                 maxHeight: isFormOpen ? '900px' : '0px', 
                                 opacity: isFormOpen ? 1 : 0,
                                 marginTop: isFormOpen ? '3rem' : '0px'
                             }}
-                            onClick={(e) => e.stopPropagation()}
                         >
                             <div className="rounded-3xl overflow-hidden w-full mx-auto" style={{ height: '780px' }}>
                                 <div 
                                     className="calendly-inline-widget" 
                                     data-url="https://calendly.com/montillajafet/reunion-valorant?background_color=ffffff00&text_color=e8e8e3&primary_color=00e68a&hide_gdpr_banner=1" 
+                                    title="Formulario para agendar una demo con Dectia"
                                     style={{ 
                                         minWidth: '320px',
                                         width: '100%',
@@ -878,12 +1032,12 @@
                                 ></div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                     <div className="max-w-7xl mx-auto py-6 flex flex-col md:flex-row items-center justify-between gap-2 border-t border-navy/20 mt-0">
                         <span className="font-sora font-bold text-chalk/60 text-sm tracking-tight">Dectia.</span>
                         <span className="font-mono text-xs text-chalk/30">&copy; {new Date().getFullYear()} Dectia. Todos los derechos reservados.</span>
                         <span className="font-mono text-xs text-chalk/20 flex items-center gap-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/><path d="M9 3v6"/><path d="M15 3v6"/></svg>
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/><path d="M9 3v6"/><path d="M15 3v6"/></svg>
                             Ciudad Autónoma de Buenos Aires, Argentina
                         </span>
                     </div>
