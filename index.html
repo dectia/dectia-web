@@ -225,6 +225,14 @@
             outline-offset: 3px;
         }
 
+        @keyframes navSlideDown {
+            from { transform: translateX(-50%) translateY(-80px); opacity: 0; }
+            to   { transform: translateX(-50%) translateY(0);     opacity: 1; }
+        }
+        .nav-enter {
+            animation: navSlideDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -259,8 +267,239 @@
     </div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef, useLayoutEffect } = React;
+        const { useState, useEffect, useRef, useLayoutEffect, createContext, useContext } = React;
         gsap.registerPlugin(ScrollTrigger);
+
+        /* ─── i18n ─────────────────────────────────────────────────── */
+        const LangContext = createContext({ lang: 'es', setLang: () => {} });
+        const useT = () => {
+            const { lang } = useContext(LangContext);
+            return translations[lang];
+        };
+
+        const translations = {
+            es: {
+                nav: {
+                    platform: 'Plataforma',
+                    methodology: 'Metodología',
+                    useCases: 'Casos de Uso',
+                    scheduleDemo: 'Agendar Demo',
+                    login: 'Acceder',
+                    loginLabel: 'Acceder a la plataforma (se abre en una nueva pestaña)',
+                    openMenu: 'Abrir menú de navegación',
+                    closeMenu: 'Cerrar menú de navegación',
+                },
+                skipNav: {
+                    label: 'Acceso rápido por secciones',
+                    mainContent: 'Saltar al contenido principal',
+                    platform: 'Saltar a Plataforma',
+                    methodology: 'Saltar a Metodología',
+                    useCases: 'Saltar a Casos de Uso',
+                    demo: 'Saltar a Agendar demo',
+                },
+                hero: {
+                    badge: '[ INTELIGENCIA DE SEGURIDAD FÍSICA ]',
+                    title1: 'De semanas',
+                    title2: 'a horas.',
+                    description: 'Convierte auditorías y relevamientos de seguridad en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.',
+                    cta: 'Iniciar Evaluación',
+                },
+                features: {
+                    title: 'Precisión y',
+                    titleItalic: 'expertise.',
+                    description: 'Instrumentos funcionales diseñados para auditar el riesgo en tiempo récord con seguridad end-to-end.',
+                },
+                compliance: {
+                    title: 'Estándares siempre vigentes',
+                    cards: ['Normativa Interna', 'ISO 27001', 'NFPA 730'],
+                },
+                telemetry: {
+                    title: 'Potenciado con IA',
+                    live: 'Análisis en vivo',
+                    messages: [
+                        'Inicializando modelo local...',
+                        'Analizando contra ISO 27001 > Check.',
+                        'Contrastando respuestas vs ASIS Standard...',
+                        'Score crítico: 82/100 (Estable)',
+                        'Generando matriz de riesgos...',
+                    ],
+                },
+                uploader: {
+                    title: 'Integra tu Normativa',
+                    dropzone: 'Carga tu archivo',
+                    fileName: 'Normativa interna.pdf',
+                },
+                headcount: {
+                    title: 'Mismo Equipo + Capacidad',
+                    without: 'Sin Dectia',
+                    with: 'Con Dectia',
+                },
+                dashboard: {
+                    title: 'Informe completo',
+                    titleItalic: 'en minutos.',
+                    description: 'Data estructurada, KPIs accionables y matrices de riesgo generadas instantáneamente.',
+                    riskIndex: 'Índice de Riesgo',
+                    stable: 'Estable',
+                    findings: 'Hallazgos por Zona',
+                },
+                process: {
+                    title: 'El siguiente nivel',
+                    titleItalic: 'en seguridad.',
+                    steps: [
+                        {
+                            title: 'Diseña la evaluación',
+                            content: 'Selecciona entre Auditorías y Relevamientos, especifica tu tipo de instalaciones y configura los campos que necesites mientras la IA experta te asiste con la normativa internacional actualizada.',
+                            bold1: 'Auditorías',
+                            bold2: 'Relevamientos',
+                        },
+                        {
+                            title: 'Lanza el análisis',
+                            content: 'Define número de objetivos, organiza tu equipo asignando operadores y publica. Tu equipo, cliente o potencial asociado completa el formulario desde cualquier lugar o dispositivo.',
+                        },
+                        {
+                            title: 'Evaluación automática',
+                            content: 'Cada respuesta genera un One-Pager con score de riesgo, hallazgos críticos y acciones inmediátas. Valor desde el primer momento.',
+                        },
+                        {
+                            title: 'Informe ejecutivo',
+                            content: 'Un clic. KPIs, vulnerabilidades, estrategias de mitigación y conclusiones accionables en base al estudio completo. Relevamientos detallados y auditorías expeditivas, listas para ser discutidas en profundidad.',
+                        },
+                    ],
+                },
+                coverage: {
+                    title: 'Cobertura',
+                    titleItalic: 'integral.',
+                    cases: [
+                        { title: 'Data Center', tags: ['IA-942-B (2017)', 'ISO/IEC 27001:2022 A.7', 'ASIS PSC.1-2012', 'NFPA 75', 'EN 50600'] },
+                        { title: 'Residencia Horizontal', tags: ['ASIS International - Security Management Standard (2018)', 'ISO 31000:2018', 'NTC 5681', 'CPTED Guidelines'] },
+                        { title: 'Institución Educativa', tags: ['ASIS K-12 School Security Guidelines (2020)', 'CISA K-12 School Security Guide', 'NFPA 101', 'ISO 31000:2018', 'I Love U Guys SRP'] },
+                        { title: 'Planta Industrial', tags: ['ASIS PSC.1-2012', 'ISO 28000:2022 (Supply Chain Security)', 'C-TPAT Security Criteria', 'OHSAS 45001:2018', 'NFPA 101'] },
+                        { title: 'Centro Comercial Retail', tags: ['ASIS Loss Prevention 2020', 'ISO 31000:2018', 'Loss Prevention Foundation (LPQ/LPC)', 'NFPA 101', 'EAS Best Practices'] },
+                        { title: 'Locales Cobranza', tags: ['ASIS Loss Prevention (2020)', 'ISO 31000:2018', 'UL 687 / EN 1143-1 (Cajas Fuertes)', 'IRAM 3597', 'NFPA 101', 'UNE-EN 50131', 'BCRA / FEHGRA'] },
+                    ],
+                },
+                footer: {
+                    demoTitle: 'Agenda una',
+                    demoTitleItalic: 'demo.',
+                    openForm: 'Solicitar Acceso',
+                    closeForm: 'Cerrar Formulario',
+                    calendlyTitle: 'Formulario para agendar una demo con Dectia',
+                    rights: 'Todos los derechos reservados.',
+                    address: 'Ciudad Autónoma de Buenos Aires, Argentina',
+                },
+            },
+            en: {
+                nav: {
+                    platform: 'Platform',
+                    methodology: 'Methodology',
+                    useCases: 'Use Cases',
+                    scheduleDemo: 'Schedule Demo',
+                    login: 'Sign In',
+                    loginLabel: 'Sign in to platform (opens in new tab)',
+                    openMenu: 'Open navigation menu',
+                    closeMenu: 'Close navigation menu',
+                },
+                skipNav: {
+                    label: 'Quick section access',
+                    mainContent: 'Skip to main content',
+                    platform: 'Skip to Platform',
+                    methodology: 'Skip to Methodology',
+                    useCases: 'Skip to Use Cases',
+                    demo: 'Skip to Schedule Demo',
+                },
+                hero: {
+                    badge: '[ PHYSICAL SECURITY INTELLIGENCE ]',
+                    title1: 'From weeks',
+                    title2: 'to hours.',
+                    description: 'Turn security audits and assessments into fast, traceable, AI-assisted processes. From the field to the report on the same day.',
+                    cta: 'Start Assessment',
+                },
+                features: {
+                    title: 'Precision and',
+                    titleItalic: 'expertise.',
+                    description: 'Functional instruments designed to audit risk in record time with end-to-end security.',
+                },
+                compliance: {
+                    title: 'Always current standards',
+                    cards: ['Internal Policy', 'ISO 27001', 'NFPA 730'],
+                },
+                telemetry: {
+                    title: 'Powered by AI',
+                    live: 'Live analysis',
+                    messages: [
+                        'Initializing local model...',
+                        'Checking against ISO 27001 > Done.',
+                        'Cross-referencing vs ASIS Standard...',
+                        'Critical score: 82/100 (Stable)',
+                        'Generating risk matrix...',
+                    ],
+                },
+                uploader: {
+                    title: 'Integrate your Standards',
+                    dropzone: 'Upload your file',
+                    fileName: 'Internal policy.pdf',
+                },
+                headcount: {
+                    title: 'Same Team + Capacity',
+                    without: 'Without Dectia',
+                    with: 'With Dectia',
+                },
+                dashboard: {
+                    title: 'Complete report',
+                    titleItalic: 'in minutes.',
+                    description: 'Structured data, actionable KPIs and risk matrices generated instantly.',
+                    riskIndex: 'Risk Index',
+                    stable: 'Stable',
+                    findings: 'Findings by Zone',
+                },
+                process: {
+                    title: 'The next level',
+                    titleItalic: 'in security.',
+                    steps: [
+                        {
+                            title: 'Design the assessment',
+                            content: 'Select between Audits and Surveys, specify your facility type and configure the fields you need while expert AI assists you with updated international standards.',
+                            bold1: 'Audits',
+                            bold2: 'Surveys',
+                        },
+                        {
+                            title: 'Launch the analysis',
+                            content: 'Define the number of objectives, organize your team by assigning operators and publish. Your team, client or potential partner completes the form from anywhere or any device.',
+                        },
+                        {
+                            title: 'Automatic evaluation',
+                            content: 'Each response generates a One-Pager with a risk score, critical findings and immediate actions. Value from the very first moment.',
+                        },
+                        {
+                            title: 'Executive report',
+                            content: 'One click. KPIs, vulnerabilities, mitigation strategies and actionable conclusions based on the complete study. Detailed surveys and expeditious audits, ready to be discussed in depth.',
+                        },
+                    ],
+                },
+                coverage: {
+                    title: 'Comprehensive',
+                    titleItalic: 'coverage.',
+                    cases: [
+                        { title: 'Data Center', tags: ['IA-942-B (2017)', 'ISO/IEC 27001:2022 A.7', 'ASIS PSC.1-2012', 'NFPA 75', 'EN 50600'] },
+                        { title: 'Residential Complex', tags: ['ASIS International - Security Management Standard (2018)', 'ISO 31000:2018', 'NTC 5681', 'CPTED Guidelines'] },
+                        { title: 'Educational Institution', tags: ['ASIS K-12 School Security Guidelines (2020)', 'CISA K-12 School Security Guide', 'NFPA 101', 'ISO 31000:2018', 'I Love U Guys SRP'] },
+                        { title: 'Industrial Plant', tags: ['ASIS PSC.1-2012', 'ISO 28000:2022 (Supply Chain Security)', 'C-TPAT Security Criteria', 'OHSAS 45001:2018', 'NFPA 101'] },
+                        { title: 'Retail Shopping Center', tags: ['ASIS Loss Prevention 2020', 'ISO 31000:2018', 'Loss Prevention Foundation (LPQ/LPC)', 'NFPA 101', 'EAS Best Practices'] },
+                        { title: 'Cash Collection Locations', tags: ['ASIS Loss Prevention (2020)', 'ISO 31000:2018', 'UL 687 / EN 1143-1 (Safes)', 'IRAM 3597', 'NFPA 101', 'UNE-EN 50131', 'BCRA / FEHGRA'] },
+                    ],
+                },
+                footer: {
+                    demoTitle: 'Schedule a',
+                    demoTitleItalic: 'demo.',
+                    openForm: 'Request Access',
+                    closeForm: 'Close Form',
+                    calendlyTitle: 'Form to schedule a demo with Dectia',
+                    rights: 'All rights reserved.',
+                    address: 'Buenos Aires, Argentina',
+                },
+            },
+        };
+        /* ─────────────────────────────────────────────────────────── */
 
         const IconCheck = ({ size = 24, className = "" }) => (
             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -279,6 +518,15 @@
         );
 
         const App = () => {
+            const [lang, setLang] = useState(() => {
+                try { return localStorage.getItem('dectia-lang') || 'es'; } catch { return 'es'; }
+            });
+
+            useEffect(() => {
+                document.documentElement.lang = lang;
+                try { localStorage.setItem('dectia-lang', lang); } catch {}
+            }, [lang]);
+
             useEffect(() => {
                 const focusHashTarget = () => {
                     const hash = window.location.hash;
@@ -295,29 +543,49 @@
             }, []);
 
             return (
-                <div className="bg-obsidian w-full min-h-screen relative font-outfit text-chalk">
-                    <SkipNav />
-                    <Navbar />
-                    <main id="main-content" tabIndex={-1} className="section-anchor outline-none">
-                        <Hero />
-                        <Features />
-                        <Process />
-                        <Coverage />
-                    </main>
-                    <Footer />
-                </div>
+                <LangContext.Provider value={{ lang, setLang }}>
+                    <div className="bg-obsidian w-full min-h-screen relative font-outfit text-chalk">
+                        <SkipNav />
+                        <Navbar />
+                        <main id="main-content" tabIndex={-1} className="section-anchor outline-none">
+                            <Hero />
+                            <Features />
+                            <Process />
+                            <Coverage />
+                        </main>
+                        <Footer />
+                        <LangToggle />
+                    </div>
+                </LangContext.Provider>
             );
         };
 
-        const SkipNav = () => (
-            <nav aria-label="Acceso rápido por secciones" className="skip-nav">
-                <a href="#main-content" className="skip-link">Saltar al contenido principal</a>
-                <a href="#features" className="skip-link">Saltar a Plataforma</a>
-                <a href="#paso" className="skip-link">Saltar a Metodología</a>
-                <a href="#cobertura" className="skip-link">Saltar a Casos de Uso</a>
-                <a href="#agenda-demo" className="skip-link">Saltar a Agendar demo</a>
-            </nav>
-        );
+        const LangToggle = () => {
+            const { lang, setLang } = useContext(LangContext);
+            return (
+                <button
+                    type="button"
+                    onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
+                    aria-label={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+                    className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center text-2xl rounded-full bg-obsidian/80 backdrop-blur-md border border-chalk/10 shadow-lg hover:border-sgreen/60 hover:scale-110 transition-all duration-200"
+                >
+                    {lang === 'es' ? '🇺🇸' : '🇦🇷'}
+                </button>
+            );
+        };
+
+        const SkipNav = () => {
+            const t = useT();
+            return (
+                <nav aria-label={t.skipNav.label} className="skip-nav">
+                    <a href="#main-content" className="skip-link">{t.skipNav.mainContent}</a>
+                    <a href="#features" className="skip-link">{t.skipNav.platform}</a>
+                    <a href="#paso" className="skip-link">{t.skipNav.methodology}</a>
+                    <a href="#cobertura" className="skip-link">{t.skipNav.useCases}</a>
+                    <a href="#agenda-demo" className="skip-link">{t.skipNav.demo}</a>
+                </nav>
+            );
+        };
 
         const Navbar = () => {
             const navRef = useRef(null);
@@ -348,9 +616,11 @@
             }, []);
 
             const closeMenu = () => setMenuOpen(false);
+            const t = useT();
+            const { lang } = useContext(LangContext);
 
             return (
-                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-500 group" ref={containerRef} aria-label="Navegación principal">
+                <nav className="nav-enter fixed top-6 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-500 group" ref={containerRef} aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
                     <div ref={navRef} className="flex items-center justify-between px-8 py-4 rounded-full border border-transparent transition-all duration-500 bg-transparent text-white group-[.nav-scrolled]:bg-white group-[.nav-scrolled]:border-sgreen/30 group-[.nav-scrolled]:text-ink shadow-lg">
                         <a href="/" aria-label="Dectia — Inicio" className="relative flex-shrink-0 h-6 md:h-7">
                             <img
@@ -369,17 +639,17 @@
                             />
                         </a>
                         <div className="hidden md:flex gap-8 text-sm font-medium">
-                            <a href="#features" className="hover:text-sgreen transition-colors rounded-sm">Plataforma</a>
-                            <a href="#paso" className="hover:text-sgreen transition-colors rounded-sm">Metodología</a>
-                            <a href="#cobertura" className="hover:text-sgreen transition-colors rounded-sm">Casos de Uso</a>
+                            <a href="#features" className="hover:text-sgreen transition-colors rounded-sm">{t.nav.platform}</a>
+                            <a href="#paso" className="hover:text-sgreen transition-colors rounded-sm">{t.nav.methodology}</a>
+                            <a href="#cobertura" className="hover:text-sgreen transition-colors rounded-sm">{t.nav.useCases}</a>
                         </div>
-                        <div className="flex items-center gap-3 md:gap-6">
+                        <div className="flex items-center gap-2 md:gap-4">
                             <button
                                 type="button"
                                 className="md:hidden p-2 rounded-full hover:bg-white/10 group-[.nav-scrolled]:hover:bg-ink/5 transition-colors"
                                 aria-expanded={menuOpen}
                                 aria-controls={mobileMenuId}
-                                aria-label={menuOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+                                aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
                                 onClick={() => setMenuOpen((open) => !open)}
                             >
                                 <svg aria-hidden="true" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -389,9 +659,9 @@
                                 </svg>
                             </button>
                             <a href="#agenda-demo" className="btn-magnetic bg-sgreen text-navy font-bold px-4 md:px-6 py-2 rounded-full text-sm flex items-center justify-center">
-                                Agendar Demo
+                                {t.nav.scheduleDemo}
                             </a>
-                            <a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" aria-label="Acceder a la plataforma (se abre en una nueva pestaña)" className="hidden sm:flex btn-magnetic bg-white text-navy font-bold px-6 py-2 rounded-full text-sm hover:opacity-90 transition-opacity">Acceder</a>
+                            <a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" aria-label={t.nav.loginLabel} className="hidden sm:flex btn-magnetic bg-white text-navy font-bold px-6 py-2 rounded-full text-sm hover:opacity-90 transition-opacity">{t.nav.login}</a>
                         </div>
                     </div>
                     {menuOpen && (
@@ -400,10 +670,10 @@
                             className="md:hidden mt-2 rounded-3xl border border-sgreen/30 bg-white text-ink shadow-lg p-4"
                         >
                             <ul className="flex flex-col gap-2">
-                                <li><a href="#features" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Plataforma</a></li>
-                                <li><a href="#paso" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Metodología</a></li>
-                                <li><a href="#cobertura" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Casos de Uso</a></li>
-                                <li className="sm:hidden"><a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>Acceder</a></li>
+                                <li><a href="#features" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>{t.nav.platform}</a></li>
+                                <li><a href="#paso" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>{t.nav.methodology}</a></li>
+                                <li><a href="#cobertura" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>{t.nav.useCases}</a></li>
+                                <li className="sm:hidden"><a href="https://app.dectia-ai.com" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 rounded-2xl hover:bg-bone transition-colors" onClick={closeMenu}>{t.nav.login}</a></li>
                             </ul>
                         </div>
                     )}
@@ -413,6 +683,7 @@
 
         const Hero = () => {
             const heroRef = useRef(null);
+            const t = useT();
             
             useLayoutEffect(() => {
                 let ctx = gsap.context(() => {
@@ -447,18 +718,18 @@
                     <div className="relative z-10 flex h-full w-full flex-col justify-end pb-24 px-8 md:px-24">
                         <div className="max-w-4xl text-left">
                             <p className="hero-text text-sgreen font-mono text-sm tracking-widest mb-6 uppercase">
-                                [ INTELIGENCIA DE SEGURIDAD FÍSICA ]
+                                {t.hero.badge}
                             </p>
-                            <h1 id="hero-heading" className="hero-text font-sora font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-10">
-                                De semanas
-                                <span className="block font-cormorant italic font-normal tracking-normal mt-2">a horas.</span>
+                            <h1 id="hero-heading" className="hero-text font-sora font-bold text-5xl sm:text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-10">
+                                {t.hero.title1}
+                                <span className="block font-cormorant italic font-normal tracking-normal mt-2">{t.hero.title2}</span>
                             </h1>
                             <p className="hero-text font-outfit text-xl md:text-2xl text-chalk/80 max-w-2xl font-light mb-12">
-                                Convierte auditorías y relevamientos de seguridad en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.
+                                {t.hero.description}
                             </p>
                             <div className="hero-text flex gap-4">
                                 <a href="#agenda-demo" className="btn-magnetic bg-bone text-ink font-bold px-8 py-4 rounded-full flex items-center gap-2">
-                                    Iniciar Evaluación
+                                    {t.hero.cta}
                                     <span aria-hidden="true" className="w-2 h-2 rounded-full bg-sgreen animate-pulse"></span>
                                 </a>
                             </div>
@@ -469,16 +740,18 @@
         };
 
         const Features = () => {
+            const t = useT();
+            const { lang } = useContext(LangContext);  // needed for card keys
             return (
-                <section id="features" tabIndex={-1} aria-labelledby="features-heading" className="section-anchor py-32 px-8 md:px-24 bg-obsidian outline-none">
+                <section id="features" tabIndex={-1} aria-labelledby="features-heading" className="section-anchor py-16 md:py-32 px-8 md:px-24 bg-obsidian outline-none">
                     <div className="max-w-7xl mx-auto">
-                        <h2 id="features-heading" className="font-sora text-5xl font-bold mb-4">Precisión y <span className="font-cormorant italic text-sgreen font-normal">expertise.</span></h2>
-                        <p className="font-outfit text-xl text-chalk/60 mb-20 max-w-2xl">Instrumentos funcionales diseñados para auditar el riesgo en tiempo récord con seguridad end-to-end.</p>
+                        <h2 id="features-heading" className="font-sora text-3xl md:text-5xl font-bold mb-4">{t.features.title} <span className="font-cormorant italic text-sgreen font-normal">{t.features.titleItalic}</span></h2>
+                        <p className="font-outfit text-lg md:text-xl text-chalk/60 mb-10 md:mb-20 max-w-2xl">{t.features.description}</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <DashboardCard />
-                            <ComplianceCard />
-                            <TelemetryCard />
+                            <ComplianceCard key={"compliance-" + lang} />
+                            <TelemetryCard key={"telemetry-" + lang} />
                             <UploaderCard />
                             <HeadcountCard />
                         </div>
@@ -488,7 +761,8 @@
         };
 
         const ComplianceCard = () => {
-            const [cards, setCards] = useState(["Normativa Interna", "ISO 27001", "NFPA 730"]);
+            const t = useT();
+            const [cards, setCards] = useState(() => t.compliance.cards);
             
             useEffect(() => {
                 const interval = setInterval(() => {
@@ -504,7 +778,7 @@
 
             return (
                 <div className="bg-navy/30 border border-chalk/10 rounded-3xl p-10 h-96 flex flex-col items-center justify-center relative overflow-hidden">
-                    <h3 className="absolute top-8 left-8 font-sora font-bold text-xl">Estándares siempre vigentes</h3>
+                    <h3 className="absolute top-8 left-8 font-sora font-bold text-xl">{t.compliance.title}</h3>
                     <div className="relative w-full max-w-xs h-48 mt-12">
                         {cards.map((text, i) => (
                             <div 
@@ -528,13 +802,8 @@
         };
 
         const TelemetryCard = () => {
-            const messages = [
-                "Inicializando modelo local...",
-                "Analizando contra ISO 27001 > Check.",
-                "Contrastando respuestas vs ASIS Standard...",
-                "Score crítico: 82/100 (Estable)",
-                "Generando matriz de riesgos..."
-            ];
+            const t = useT();
+            const messages = t.telemetry.messages;
             const [textIndex, setTextIndex] = useState(0);
             const [charIndex, setCharIndex] = useState(0);
 
@@ -556,10 +825,10 @@
             return (
                 <div className="bg-ink rounded-3xl p-8 h-96 border border-chalk/10 relative flex flex-col font-mono">
                     <div className="flex justify-between items-center mb-8 border-b border-chalk/10 pb-4">
-                        <h3 className="font-sora font-bold text-xl text-bone">Potenciado con IA</h3>
+                        <h3 className="font-sora font-bold text-xl text-bone">{t.telemetry.title}</h3>
                         <div className="flex items-center gap-2 text-xs text-sgreen bg-sgreen/10 px-3 py-1 rounded-full">
                             <div className="w-1.5 h-1.5 rounded-full bg-sgreen animate-pulse"></div>
-                            Análisis en vivo
+                            {t.telemetry.live}
                         </div>
                     </div>
                     <div className="flex-1 flex flex-col justify-end text-sm text-sgreen/90">
@@ -576,6 +845,7 @@
         };
 
         const UploaderCard = () => {
+            const t = useT();
             const containerRef = useRef(null);
             const cursorRef = useRef(null);
             const fileRef = useRef(null);
@@ -620,19 +890,19 @@
 
             return (
                 <div ref={containerRef} className="bg-navy/30 rounded-3xl p-8 h-96 border border-chalk/10 relative overflow-hidden flex flex-col">
-                    <h3 className="font-sora font-bold text-xl mb-4">Integra tu Normativa</h3>
+                    <h3 className="font-sora font-bold text-xl mb-4">{t.uploader.title}</h3>
                     <div className="flex-1 relative mt-4">
                         
                         <div ref={dropzoneRef} className="absolute right-4 top-4 w-48 h-32 border-2 border-dashed border-chalk/20 rounded-2xl flex flex-col justify-center items-center transition-colors">
                             {!uploaded ? (
                                 <React.Fragment>
                                     <IconUpload className="mb-2 text-chalk/40" size={24} />
-                                    <span className="text-xs text-chalk/40 font-mono">Carga tu archivo</span>
+                                    <span className="text-xs text-chalk/40 font-mono">{t.uploader.dropzone}</span>
                                 </React.Fragment>
                             ) : (
                                 <div className="text-sgreen flex flex-col items-center">
                                     <IconCheck className="mb-2" size={24} />
-                                    <span className="text-xs font-mono">Normativa interna.pdf</span>
+                                    <span className="text-xs font-mono">{t.uploader.fileName}</span>
                                 </div>
                             )}
                         </div>
@@ -641,7 +911,7 @@
                             <div className="bg-ink/10 p-2 rounded-lg">
                                 <IconFileText size={16} />
                             </div>
-                            <span className="text-xs font-mono font-bold truncate">Normativa interna.pdf</span>
+                            <span className="text-xs font-mono font-bold truncate">{t.uploader.fileName}</span>
                         </div>
 
                         <div ref={cursorRef} className="absolute z-20 w-6 h-6">
@@ -655,6 +925,7 @@
         };
 
         const HeadcountCard = () => {
+            const t = useT();
             const containerRef = useRef(null);
             
             useLayoutEffect(() => {
@@ -678,12 +949,11 @@
 
             return (
                 <div ref={containerRef} className="bg-ink rounded-3xl p-8 h-96 border border-chalk/10 relative flex flex-col shadow-lg">
-                    <h3 className="font-sora font-bold text-xl mb-6 text-left text-bone">Mismo Equipo + Capacidad</h3>
+                    <h3 className="font-sora font-bold text-xl mb-6 text-left text-bone">{t.headcount.title}</h3>
                     
                     <div className="flex-1 flex gap-4 mt-2">
-                        {/* Sin Dectia */}
                         <div className="flex-1 bg-obsidian/50 rounded-2xl border border-chalk/5 p-4 flex flex-col items-center shadow-inner">
-                            <span className="text-xs font-mono text-chalk/40 mb-2">Sin Dectia</span>
+                            <span className="text-xs font-mono text-chalk/40 mb-2">{t.headcount.without}</span>
                             <div className="flex-1 w-full flex flex-col items-center justify-between relative mt-2">
                                 <div className="ht-left-client text-chalk/60 bg-navy/50 p-3 rounded-full border border-chalk/10 z-10 shadow-md"><IconUser size={24} /></div>
                                 <div className="ht-left-line w-px h-16 bg-gradient-to-t from-chalk/20 to-chalk/5 border-l border-dashed border-chalk/20 absolute top-[40px] origin-bottom -z-0"></div>
@@ -691,9 +961,8 @@
                             </div>
                         </div>
 
-                        {/* Con Dectia */}
                         <div className="flex-1 bg-sgreen/5 rounded-2xl border border-sgreen/20 p-4 flex flex-col items-center shadow-sm">
-                            <span className="text-xs font-mono text-sgreen/80 mb-2 font-bold">Con Dectia</span>
+                            <span className="text-xs font-mono text-sgreen/80 mb-2 font-bold">{t.headcount.with}</span>
                             <div className="flex-1 w-full flex flex-col items-center justify-between relative mt-2">
                                 <div className="w-full flex justify-between px-1 z-10 gap-1">
                                     <div className="ht-right-client text-bone bg-navy p-2 rounded-full border border-sgreen/30 shadow-md"><IconUser size={18} /></div>
@@ -719,6 +988,7 @@
         };
 
         const DashboardCard = () => {
+             const t = useT();
              const dashRef = useRef(null);
 
              useEffect(() => {
@@ -750,25 +1020,25 @@
              }, []);
 
             return (
-                <div ref={dashRef} className="col-span-1 md:col-span-2 bg-obsidian border border-chalk/10 rounded-3xl h-96 flex overflow-hidden flex-col md:flex-row">
-                    <div className="w-full md:w-1/2 p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r border-chalk/10 z-10 bg-gradient-to-r from-obsidian to-transparent">
-                        <h3 className="font-sora font-bold text-4xl mb-4 leading-tight">Informe completo<br/><span className="text-sgreen font-cormorant italic">en minutos.</span></h3>
-                        <p className="font-outfit text-chalk/60">Data estructurada, KPIs accionables y matrices de riesgo generadas instantáneamente.</p>
+                <div ref={dashRef} className="col-span-1 md:col-span-2 bg-obsidian border border-chalk/10 rounded-3xl md:h-96 flex overflow-hidden flex-col md:flex-row">
+                    <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r border-chalk/10 z-10 bg-gradient-to-r from-obsidian to-transparent">
+                        <h3 className="font-sora font-bold text-3xl md:text-4xl mb-4 leading-tight">{t.dashboard.title}<br/><span className="text-sgreen font-cormorant italic">{t.dashboard.titleItalic}</span></h3>
+                        <p className="font-outfit text-chalk/60 text-sm md:text-base">{t.dashboard.description}</p>
                     </div>
-                    <div className="w-full md:w-1/2 relative bg-navy/20 overflow-hidden pt-12 px-8 mask-image-bottom">
+                    <div className="w-full md:w-1/2 relative bg-navy/20 overflow-hidden pt-8 md:pt-12 px-6 md:px-8 h-64 md:h-auto mask-image-bottom">
                         <div className="dash-content w-full absolute top-12 left-0 px-8 flex flex-col gap-6">
                             
                             <div className="bg-ink p-6 rounded-2xl border border-chalk/5">
-                                <h4 className="text-xs font-mono text-chalk/40 mb-4">Índice de Riesgo</h4>
+                                <h4 className="text-xs font-mono text-chalk/40 mb-4">{t.dashboard.riskIndex}</h4>
                                 <div className="relative w-40 h-20 mx-auto overflow-hidden">
                                      <div className="absolute w-40 h-40 border-[16px] border-chalk/10 rounded-full"></div>
                                      <div className="gauge-fill absolute w-40 h-40 border-[16px] border-transparent border-t-sgreen border-r-sgreen rounded-full origin-center"></div>
                                 </div>
-                                <div className="text-center mt-[-10px] font-sora font-bold text-2xl">82<span className="text-xs text-sgreen ml-1">Estable</span></div>
+                                <div className="text-center mt-[-10px] font-sora font-bold text-2xl">82<span className="text-xs text-sgreen ml-1">{t.dashboard.stable}</span></div>
                             </div>
 
                             <div className="bg-ink p-6 rounded-2xl border border-chalk/5 mb-20">
-                                <h4 className="text-xs font-mono text-chalk/40 mb-6">Hallazgos por Zona</h4>
+                                <h4 className="text-xs font-mono text-chalk/40 mb-6">{t.dashboard.findings}</h4>
                                 <div className="flex justify-between items-end h-32 px-4">
                                     {[60, 80, 40, 90, 50, 70].map((h, i) => (
                                         <div key={i} className="w-6 bg-chalk/10 rounded-t-sm relative h-full flex items-end">
@@ -784,7 +1054,18 @@
             );
         };
         
+        const renderStepContent = (step) => {
+            if (!step.bold1) return step.content;
+            const parts1 = step.content.split(step.bold1);
+            if (parts1.length < 2) return step.content;
+            if (!step.bold2) return <>{parts1[0]}<strong>{step.bold1}</strong>{parts1[1]}</>;
+            const parts2 = parts1[1].split(step.bold2);
+            if (parts2.length < 2) return <>{parts1[0]}<strong>{step.bold1}</strong>{parts1[1]}</>;
+            return <>{parts1[0]}<strong>{step.bold1}</strong>{parts2[0]}<strong>{step.bold2}</strong>{parts2[1]}</>;
+        };
+
         const Process = () => {
+            const t = useT();
             const processRef = useRef(null);
             
             useLayoutEffect(() => {
@@ -804,7 +1085,7 @@
             }, []);
 
             return (
-                <section id="paso" tabIndex={-1} ref={processRef} aria-labelledby="paso-heading" className="section-anchor relative py-32 px-8 md:px-24 overflow-hidden bg-bone text-ink outline-none">
+                <section id="paso" tabIndex={-1} ref={processRef} aria-labelledby="paso-heading" className="section-anchor relative py-16 md:py-32 px-6 md:px-24 overflow-hidden bg-bone text-ink outline-none">
                     <div className="absolute inset-0 z-0 overflow-hidden">
                         <img 
                             src="https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD.jpg" 
@@ -817,34 +1098,13 @@
                         />
                     </div>
                     <div className="relative z-10 max-w-7xl mx-auto">
-                        <h2 id="paso-heading" className="font-sora text-5xl font-bold mb-16 text-center">El siguiente nivel <span className="text-sgreen font-cormorant italic font-normal">en seguridad.</span></h2>
+                        <h2 id="paso-heading" className="font-sora text-3xl md:text-5xl font-bold mb-10 md:mb-16 text-center">{t.process.title} <span className="text-sgreen font-cormorant italic font-normal">{t.process.titleItalic}</span></h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                                        {[
-                                { 
-                                    title: "Diseña la evaluación", 
-                                    content: (
-                                        <>
-                                            Selecciona entre <strong>Auditorías</strong> y <strong>Relevamientos</strong>, especifica tu tipo de instalaciones y configura los campos que necesites mientras la IA experta te asiste con la normativa internacional actualizada.
-                                        </>
-                                    ) 
-                                },
-                                { 
-                                    title: "Lanza el análisis", 
-                                    content: "Define número de objetivos, organiza tu equipo asignando operadores y publica. Tu equipo, cliente o potencial asociado completa el formulario desde cualquier lugar o dispositivo." 
-                                },
-                                { 
-                                    title: "Evaluación automática", 
-                                    content: "Cada respuesta genera un One-Pager con score de riesgo, hallazgos críticos y acciones inmediátas. Valor desde el primer momento." 
-                                },
-                                { 
-                                    title: "Informe ejecutivo", 
-                                    content: "Un clic. KPIs, vulnerabilidades, estrategias de mitigación y conclusiones accionables en base al estudio completo. Relevamientos detallados y auditorías expeditivas, listas para ser discutidas en profundidad." 
-                                }
-                            ].map((step, i) => (
-                                <div key={i} className="bg-white/80 backdrop-blur-sm border border-navy/10 p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                            {t.process.steps.map((step, i) => (
+                                <div key={i} className="bg-white/80 backdrop-blur-sm border border-navy/10 p-6 md:p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
                                     <h3 className="font-sora font-bold text-xl mb-4 text-navy"><span className="text-sgreen">{i+1}.</span> {step.title}</h3>
-                                    <p className="font-outfit text-ink/70 text-sm leading-relaxed font-light">{step.content}</p>
+                                    <p className="font-outfit text-ink/70 text-sm leading-relaxed font-light">{renderStepContent(step)}</p>
                                 </div>
                             ))}
                         </div>
@@ -854,6 +1114,7 @@
         };
 
         const Coverage = () => {
+            const t = useT();
             const containerRef = useRef(null);
             const trackRef = useRef(null);
             const cardsAreaRef = useRef(null);
@@ -886,45 +1147,15 @@
                 return () => ctx.revert();
             }, []);
 
-            const cases = [
-                { 
-                    title: "Data Center", 
-                    icon: <GearArtifact />,
-                    tags: ["IA-942-B (2017)", "ISO/IEC 27001:2022 A.7", "ASIS PSC.1-2012", "NFPA 75", "EN 50600"]
-                },
-                { 
-                    title: "Residencia Horizontal", 
-                    icon: <BuildingArtifact />,
-                    tags: ["ASIS International - Security Management Standard (2018)", "ISO 31000:2018", "NTC 5681", "CPTED Guidelines"]
-                },
-                { 
-                    title: "Institución Educativa", 
-                    icon: <EduArtifact />,
-                    tags: ["ASIS K-12 School Security Guidelines (2020)", "CISA K-12 School Security Guide", "NFPA 101", "ISO 31000:2018", "I Love U Guys SRP"]
-                },
-                { 
-                    title: "Planta Industrial", 
-                    icon: <IndustrialArtifact />,
-                    tags: ["ASIS PSC.1-2012", "ISO 28000:2022 (Supply Chain Security)", "C-TPAT Security Criteria", "OHSAS 45001:2018", "NFPA 101"]
-                },
-                { 
-                    title: "Centro Comercial Retail", 
-                    icon: <RetailArtifact />,
-                    tags: ["ASIS Loss Prevention 2020", "ISO 31000:2018", "Loss Prevention Foundation (LPQ/LPC)", "NFPA 101", "EAS Best Practices"]
-                },
-                { 
-                    title: "Locales Cobranza", 
-                    icon: <MoneyArtifact />,
-                    tags: ["ASIS Loss Prevention (2020)", "ISO 31000:2018", "UL 687 / EN 1143-1 (Cajas Fuertes)", "IRAM 3597", "NFPA 101", "UNE-EN 50131", "BCRA / FEHGRA"]
-                }
-            ];
+            const caseIcons = [<GearArtifact />, <BuildingArtifact />, <EduArtifact />, <IndustrialArtifact />, <RetailArtifact />, <MoneyArtifact />];
+            const cases = t.coverage.cases.map((c, i) => ({ ...c, icon: caseIcons[i] }));
 
             return (
                 <section id="cobertura" tabIndex={-1} ref={containerRef} aria-labelledby="cobertura-heading" className="section-anchor bg-obsidian h-screen flex flex-col overflow-hidden pt-20 pb-8 outline-none">
                     {/* Título arriba */}
-                    <div className="flex-shrink-0 mb-6 max-w-7xl w-full mx-auto px-16">
-                        <h2 id="cobertura-heading" className="font-sora text-5xl md:text-6xl font-bold text-bone leading-tight">
-                            Cobertura <span className="font-cormorant italic text-sgreen font-normal">integral.</span>
+                    <div className="flex-shrink-0 mb-6 max-w-7xl w-full mx-auto px-6 md:px-16">
+                        <h2 id="cobertura-heading" className="font-sora text-4xl md:text-5xl lg:text-6xl font-bold text-bone leading-tight">
+                            {t.coverage.title} <span className="font-cormorant italic text-sgreen font-normal">{t.coverage.titleItalic}</span>
                         </h2>
                         {/* Progress bar */}
                         <div className="mt-5 h-px w-full bg-chalk/10 rounded-full overflow-hidden">
@@ -940,16 +1171,16 @@
                     <div ref={cardsAreaRef} className="flex-1 overflow-hidden relative"
                         style={{ maskImage: 'linear-gradient(to right, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 80%, transparent 100%)' }}
                     >
-                        <div ref={trackRef} className="flex h-full items-center gap-8" style={{ width: 'max-content', paddingLeft: '4rem', paddingRight: '6rem' }}>
+                        <div ref={trackRef} className="flex h-full items-center gap-6 md:gap-8 pl-6 md:pl-16 pr-10 md:pr-24" style={{ width: 'max-content' }}>
                             {cases.map((c, i) => (
                                 <div 
                                     key={i}
-                                    className="flex-shrink-0 w-[400px] bg-navy/40 border border-chalk/10 rounded-[3rem] p-10 h-full flex flex-col items-center justify-center backdrop-blur-xl shadow-2xl"
+                                    className="flex-shrink-0 w-[82vw] sm:w-[340px] md:w-[400px] bg-navy/40 border border-chalk/10 rounded-3xl md:rounded-[3rem] p-6 md:p-10 h-full flex flex-col items-center justify-center backdrop-blur-xl shadow-2xl"
                                 >
-                                    <div className="mb-8">
+                                    <div className="mb-6 md:mb-8">
                                         {c.icon}
                                     </div>
-                                    <h3 className="font-sora font-bold text-3xl text-bone text-center mb-6">{c.title}</h3>
+                                    <h3 className="font-sora font-bold text-2xl md:text-3xl text-bone text-center mb-4 md:mb-6">{c.title}</h3>
                                     <div className="flex flex-wrap justify-center gap-2 max-w-xs">
                                         {c.tags?.map((tag, idx) => (
                                             <span key={idx} className="bg-obsidian/60 border border-sgreen/30 text-sgreen/90 text-[10px] px-4 py-1.5 rounded-full font-mono shadow-sm">
@@ -966,9 +1197,12 @@
         };
 
         const Footer = () => {
+            const t = useT();
+            const { lang } = useContext(LangContext);
             const [isFormOpen, setIsFormOpen] = useState(false);
             const formPanelId = "calendly-panel";
             const demoHeadingId = "demo-heading";
+            const calendlyUrl = `https://calendly.com/montillajafet/reunion-valorant?background_color=ffffff00&text_color=e8e8e3&primary_color=00e68a&hide_gdpr_banner=1&locale=${lang}`;
 
             useEffect(() => {
                 const script = document.createElement('script');
@@ -986,20 +1220,20 @@
             }, [isFormOpen]);
 
             return (
-                <footer id="agenda-demo" tabIndex={-1} className="section-anchor bg-obsidian pt-16 px-8 md:px-24 border-t border-navy/30 outline-none">
+                <footer id="agenda-demo" tabIndex={-1} className="section-anchor bg-obsidian pt-10 md:pt-16 px-6 md:px-24 border-t border-navy/30 outline-none">
                     <section
-                        className="max-w-7xl mx-auto bg-navy/20 rounded-t-[4rem] p-16 border border-b-0 border-chalk/5 mb-0 mt-8 text-center"
+                        className="max-w-7xl mx-auto bg-navy/20 rounded-t-3xl md:rounded-t-[4rem] p-8 md:p-16 border border-b-0 border-chalk/5 mb-0 mt-6 md:mt-8 text-center"
                         aria-labelledby={demoHeadingId}
                     >
-                        <h2 id={demoHeadingId} className="font-sora font-bold text-5xl md:text-7xl mb-12 leading-tight">Agenda una <span className="font-cormorant italic font-normal">demo.</span></h2>
+                        <h2 id={demoHeadingId} className="font-sora font-bold text-4xl sm:text-5xl md:text-7xl mb-8 md:mb-12 leading-tight">{t.footer.demoTitle} <span className="font-cormorant italic font-normal">{t.footer.demoTitleItalic}</span></h2>
                         <button
                             type="button"
-                            className="btn-magnetic bg-bone text-ink font-bold px-12 py-5 rounded-full text-lg shadow-xl inline-flex items-center gap-3"
+                            className="btn-magnetic bg-bone text-ink font-bold px-8 md:px-12 py-4 md:py-5 rounded-full text-base md:text-lg shadow-xl inline-flex items-center gap-3"
                             aria-expanded={isFormOpen}
                             aria-controls={formPanelId}
                             onClick={() => setIsFormOpen((open) => !open)}
                         >
-                            {isFormOpen ? 'Cerrar Formulario' : 'Solicitar Acceso'}
+                            {isFormOpen ? t.footer.closeForm : t.footer.openForm}
                             <span aria-hidden="true" className={"w-2 h-2 rounded-full bg-sgreen " + (isFormOpen ? "" : "animate-pulse")}></span>
                         </button>
                         
@@ -1019,8 +1253,8 @@
                             <div className="rounded-3xl overflow-hidden w-full mx-auto" style={{ height: '780px' }}>
                                 <div 
                                     className="calendly-inline-widget" 
-                                    data-url="https://calendly.com/montillajafet/reunion-valorant?background_color=ffffff00&text_color=e8e8e3&primary_color=00e68a&hide_gdpr_banner=1" 
-                                    title="Formulario para agendar una demo con Dectia"
+                                    data-url={calendlyUrl}
+                                    title={t.footer.calendlyTitle}
                                     style={{ 
                                         minWidth: '320px',
                                         width: '100%',
@@ -1033,15 +1267,15 @@
                             </div>
                         </div>
                     </section>
-                    <div className="max-w-7xl mx-auto py-6 flex flex-col md:flex-row items-center justify-between gap-2 border-t border-navy/20 mt-0">
+                    <div className="max-w-7xl mx-auto py-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-navy/20 mt-0">
                         <div className="flex flex-col items-start gap-2">
                             <span className="font-sora font-bold text-chalk/60 text-sm tracking-tight">Dectia.</span>
                             <span className="font-mono text-xs text-chalk/20 flex items-center gap-1.5">
                                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/><path d="M9 3v6"/><path d="M15 3v6"/></svg>
-                                Ciudad Autónoma de Buenos Aires, Argentina
+                                {t.footer.address}
                             </span>
                             </div>
-                        <span className="font-mono text-xs text-chalk/30">&copy; {new Date().getFullYear()} Dectia. Todos los derechos reservados.</span>
+                        <span className="font-mono text-xs text-chalk/30">&copy; {new Date().getFullYear()} Dectia. {t.footer.rights}</span>
                     </div>
                 </footer>
             );
