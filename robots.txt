@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dectia-ai.com/sitemap.xml

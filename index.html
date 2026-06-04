@@ -3,10 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dectia - Análisis de Riesgo AI</title>
-    
+    <title>Dectia | Análisis de Riesgo y Seguridad Física con IA</title>
+    <meta name="description" content="Dectia convierte semanas de auditorías y relevamientos de seguridad física en horas. Plataforma de inteligencia artificial para detección de riesgos, análisis de patrones y reportes automatizados.">
+    <meta name="keywords" content="seguridad física, análisis de riesgo, auditoría de seguridad, inteligencia artificial, IA, detección de amenazas, relevamiento de seguridad, reportes automatizados, Dectia">
+    <meta name="author" content="Dectia">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#0A0E14">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="application-name" content="Dectia">
+    <meta name="apple-mobile-web-app-title" content="Dectia">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="canonical" href="https://dectia-ai.com/">
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" href="/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dectia-ai.com/">
+    <meta property="og:title" content="Dectia | Análisis de Riesgo y Seguridad Física con IA">
+    <meta property="og:description" content="De semanas a horas. Inteligencia de seguridad física impulsada por IA para detección de riesgos y análisis automatizado.">
+    <meta property="og:image" content="https://dectia-ai.com/hero-bg.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Dectia — plataforma de inteligencia de seguridad física">
+    <meta property="og:site_name" content="Dectia">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dectia-ai.com/">
+    <meta name="twitter:title" content="Dectia | Análisis de Riesgo y Seguridad Física con IA">
+    <meta name="twitter:description" content="De semanas a horas. Inteligencia de seguridad física impulsada por IA para detección de riesgos y análisis automatizado.">
+    <meta name="twitter:image" content="https://dectia-ai.com/hero-bg.png">
+    <meta name="twitter:image:alt" content="Dectia — plataforma de inteligencia de seguridad física">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://dectia-ai.com/#organization",
+          "name": "Dectia",
+          "url": "https://dectia-ai.com/",
+          "logo": "https://dectia-ai.com/favicon-96x96.png",
+          "description": "Plataforma de inteligencia artificial para análisis de riesgo y seguridad física.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ciudad Autónoma de Buenos Aires",
+            "addressCountry": "AR"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://dectia-ai.com/#website",
+          "url": "https://dectia-ai.com/",
+          "name": "Dectia",
+          "inLanguage": "es-AR",
+          "publisher": { "@id": "https://dectia-ai.com/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Dectia",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Web",
+          "url": "https://dectia-ai.com/",
+          "description": "Convierte auditorías y relevamientos de seguridad física en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Agendá una demo"
+          },
+          "publisher": { "@id": "https://dectia-ai.com/#organization" }
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preload" as="image" href="./hero-bg.png" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=JetBrains+Mono:wght@100..800&family=Outfit:wght@100..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,6 +181,7 @@
         /* Hide scrollbars for Calendly iframe */
         .calendly-inline-widget iframe {
             scrollbar-width: none !important;
+            background: transparent !important;
         }
         .calendly-inline-widget iframe::-webkit-scrollbar {
             display: none !important;
@@ -105,7 +195,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <noscript>
+            <main style="max-width:720px;margin:0 auto;padding:48px 24px;font-family:sans-serif;color:#E8E8E3;">
+                <h1>Dectia — Análisis de Riesgo y Seguridad Física con IA</h1>
+                <p>De semanas a horas. Dectia convierte auditorías y relevamientos de seguridad física en procesos rápidos, trazables y asistidos por inteligencia artificial. Del campo al informe en el mismo día.</p>
+                <h2>Plataforma</h2>
+                <p>Detección de riesgos, análisis de patrones y reportes automatizados para equipos de seguridad.</p>
+                <h2>Contacto</h2>
+                <p>Ciudad Autónoma de Buenos Aires, Argentina. <a href="https://app.dectia-ai.com" style="color:#00E68A;">Acceder a la plataforma</a> o agendá una demo.</p>
+                <p><strong>Para una experiencia completa, habilitá JavaScript en tu navegador.</strong></p>
+            </main>
+        </noscript>
+    </div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef, useLayoutEffect } = React;
@@ -200,8 +302,12 @@
                     <div className="absolute inset-0 z-0">
                         <img 
                             src="./hero-bg.png" 
-                            alt="Security Dashboard" 
-                            className="w-full h-full object-cover grayscale-[30%]"
+                            alt="Panel de inteligencia de seguridad física de Dectia" 
+                            width="1920"
+                            height="1080"
+                            fetchpriority="high"
+                            decoding="async"
+                            className="w-full h-full object-cover grayscale-[30%] blur-[1px] scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-navy/30 mix-blend-multiply"></div>
                         <div className="absolute inset-0 bg-gradient-to-br from-obsidian via-transparent to-transparent"></div>
@@ -211,11 +317,9 @@
                         <p className="hero-text text-sgreen font-mono text-sm tracking-widest mb-6 uppercase">
                             [ INTELIGENCIA DE SEGURIDAD FÍSICA ]
                         </p>
-                        <h1 className="hero-text font-sora font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-4">
+                        <h1 className="hero-text font-sora font-bold text-6xl md:text-8xl leading-[0.9] tracking-tighter text-bone mb-10">
                             De semanas
-                        </h1>
-                        <h1 className="hero-text font-cormorant italic text-6xl md:text-8xl leading-[0.9] text-bone mb-10">
-                            a horas.
+                            <span className="block font-cormorant italic font-normal tracking-normal mt-2">a horas.</span>
                         </h1>
                         <p className="hero-text font-outfit text-xl md:text-2xl text-chalk/80 max-w-2xl font-light mb-12">
                             Convierte auditorías y relevamientos de seguridad en procesos rápidos, trazables y asistidos por IA. Del campo al informe en el mismo día.
@@ -571,7 +675,10 @@
                     <div className="absolute inset-0 z-0 overflow-hidden">
                         <img 
                             src="https://images.unsplash.com/39/lIZrwvbeRuuzqOoWJUEn_Photoaday_CSD.jpg" 
-                            alt="Organic Texture" 
+                            alt="" 
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
                             className="process-bg w-full h-[150%] object-cover opacity-20 contrast-150 grayscale"
                             onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d'; }}
                         />
@@ -615,24 +722,32 @@
 
         const Coverage = () => {
             const containerRef = useRef(null);
-            const cardsRef = useRef([]);
+            const trackRef = useRef(null);
+            const cardsAreaRef = useRef(null);
+            const progressRef = useRef(null);
 
             useLayoutEffect(() => {
                 let ctx = gsap.context(() => {
-                    const cards = cardsRef.current;
-                    cards.forEach((card, i) => {
-                        if (i === 0) return;
-                        
-                        ScrollTrigger.create({
-                            trigger: card,
-                            start: "top 60%",
-                            end: "top 20%",
-                            scrub: true,
-                            animation: gsap.fromTo(cards[i - 1],
-                                { scale: 1, filter: "blur(0px)", opacity: 1 },
-                                { scale: 0.95, filter: "blur(0px)", opacity: 0.8, ease: "power2.inOut" }
-                            )
-                        });
+                    const track = trackRef.current;
+                    const cardsArea = cardsAreaRef.current;
+
+                    gsap.to(track, {
+                        x: () => -(track.scrollWidth - cardsArea.clientWidth),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: containerRef.current,
+                            start: "top top",
+                            end: () => `+=${track.scrollWidth - cardsArea.clientWidth}`,
+                            scrub: 1,
+                            pin: true,
+                            anticipatePin: 1,
+                            invalidateOnRefresh: true,
+                            onUpdate: (self) => {
+                                if (progressRef.current) {
+                                    progressRef.current.style.transform = `scaleX(${self.progress})`;
+                                }
+                            }
+                        }
                     });
                 }, containerRef);
                 return () => ctx.revert();
@@ -672,24 +787,39 @@
             ];
 
             return (
-                <section id="cobertura" ref={containerRef} className="py-32 px-8 md:px-24 bg-obsidian relative min-h-[300vh]">
-                    <div className="max-w-4xl mx-auto h-full">
-                        <h2 className="font-sora text-5xl font-bold mb-32 text-center text-bone">Cobertura <span className="font-cormorant italic text-sgreen font-normal">integral.</span></h2>
-                        
-                        <div className="flex flex-col gap-[30vh] relative pb-[30vh]">
+                <section id="cobertura" ref={containerRef} className="bg-obsidian h-screen flex flex-col overflow-hidden pt-20 pb-8 ">
+                    {/* Título arriba */}
+                    <div className="flex-shrink-0 mb-6 max-w-7xl w-full mx-auto px-16">
+                        <h2 className="font-sora text-5xl md:text-6xl font-bold text-bone leading-tight">
+                            Cobertura <span className="font-cormorant italic text-sgreen font-normal">integral.</span>
+                        </h2>
+                        {/* Progress bar */}
+                        <div className="mt-5 h-px w-full bg-chalk/10 rounded-full overflow-hidden">
+                            <div
+                                ref={progressRef}
+                                className="h-full bg-sgreen rounded-full origin-left"
+                                style={{ transform: 'scaleX(0)' }}
+                            ></div>
+                        </div>
+                    </div>
+
+                    {/* Área de scroll de cards */}
+                    <div ref={cardsAreaRef} className="flex-1 overflow-hidden relative"
+                        style={{ maskImage: 'linear-gradient(to right, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 80%, transparent 100%)' }}
+                    >
+                        <div ref={trackRef} className="flex h-full items-center gap-8" style={{ width: 'max-content', paddingLeft: '4rem', paddingRight: '6rem' }}>
                             {cases.map((c, i) => (
                                 <div 
-                                    key={i} 
-                                    ref={el => cardsRef.current[i] = el}
-                                    className="bg-navy/40 border border-chalk/10 rounded-[3rem] p-12 min-h-[50vh] flex flex-col items-center justify-center sticky backdrop-blur-xl shadow-2xl origin-top" style={{ top: `calc(8rem + ${i * 1.5}rem)` }}
+                                    key={i}
+                                    className="flex-shrink-0 w-[400px] bg-navy/40 border border-chalk/10 rounded-[3rem] p-10 h-full flex flex-col items-center justify-center backdrop-blur-xl shadow-2xl"
                                 >
-                                    <div className="mb-12">
+                                    <div className="mb-8">
                                         {c.icon}
                                     </div>
-                                    <h3 className="font-sora font-bold text-4xl text-bone text-center mb-8">{c.title}</h3>
-                                    <div className="flex flex-wrap justify-center gap-2 max-w-2xl px-4">
+                                    <h3 className="font-sora font-bold text-3xl text-bone text-center mb-6">{c.title}</h3>
+                                    <div className="flex flex-wrap justify-center gap-2 max-w-xs">
                                         {c.tags?.map((tag, idx) => (
-                                            <span key={idx} className="bg-obsidian/60 border border-sgreen/30 text-sgreen/90 text-[10px] sm:text-xs px-4 py-1.5 rounded-full font-mono shadow-sm">
+                                            <span key={idx} className="bg-obsidian/60 border border-sgreen/30 text-sgreen/90 text-[10px] px-4 py-1.5 rounded-full font-mono shadow-sm">
                                                 {tag}
                                             </span>
                                         ))}
@@ -733,12 +863,13 @@
                             }}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="bg-white rounded-3xl p-2 overflow-hidden shadow-2xl max-w-4xl mx-auto border border-chalk/10" style={{ height: '780px' }}>
+                            <div className="rounded-3xl overflow-hidden w-full mx-auto" style={{ height: '780px' }}>
                                 <div 
                                     className="calendly-inline-widget" 
-                                    data-url="https://calendly.com/montillajafet/reunion-valorant" 
+                                    data-url="https://calendly.com/montillajafet/reunion-valorant?background_color=ffffff00&text_color=e8e8e3&primary_color=00e68a&hide_gdpr_banner=1" 
                                     style={{ 
-                                        minWidth: '320px', 
+                                        minWidth: '320px',
+                                        width: '100%',
                                         height: '850px', 
                                         transform: 'scale(0.9)', 
                                         transformOrigin: 'top center',
@@ -747,6 +878,14 @@
                                 ></div>
                             </div>
                         </div>
+                    </div>
+                    <div className="max-w-7xl mx-auto py-6 flex flex-col md:flex-row items-center justify-between gap-2 border-t border-navy/20 mt-0">
+                        <span className="font-sora font-bold text-chalk/60 text-sm tracking-tight">Dectia.</span>
+                        <span className="font-mono text-xs text-chalk/30">&copy; {new Date().getFullYear()} Dectia. Todos los derechos reservados.</span>
+                        <span className="font-mono text-xs text-chalk/20 flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 22V12h6v10"/><path d="M3 9h18"/><path d="M9 3v6"/><path d="M15 3v6"/></svg>
+                            Ciudad Autónoma de Buenos Aires, Argentina
+                        </span>
                     </div>
                 </footer>
             );

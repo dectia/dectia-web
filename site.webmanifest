@@ -1,0 +1,25 @@
+{
+  "name": "Dectia — Análisis de Riesgo y Seguridad Física con IA",
+  "short_name": "Dectia",
+  "description": "Plataforma de inteligencia artificial para análisis de riesgo y seguridad física. De semanas a horas.",
+  "lang": "es-AR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0A0E14",
+  "theme_color": "#0A0E14",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    }
+  ]
+}
